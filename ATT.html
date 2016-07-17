@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	textarea {width:500px;height:500px;}
+	input{width: 500px;}
+	em{color:red;}
+	</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+	<title></title>
+</head>
+<body>
+	<em>Start</em>
+
+    <div class="form-group">
+        <input type="text" class="form-control noEnterSubmit" id="query" placeholder="Type Here" autocomplete="off">
+    </div>
+
+    <div id="content">
+    	
+
+    </div>
+
+<script>
+	
+var theText2 = '<div class="form-group"><label for="query" class="sr-only">Target</label><input type="text" class="form-control noEnterSubmit" id="query" placeholder="Type Here" autocomplete="off"></div>';
+
+var theText = "Bobby \<div\>";
+
+
+
+console.log($('#content').val());
+
+$(document).ready(function(){
+	$SearchField = $('#query');	
+	$targets = $('.content');	
+	$SearchField.keyup(function(){
+		wordGun2(this);
+		// wordGun2(this);
+	});
+
+});//end document.ready
+
+function wordGun2(node){
+	var tempText;
+	var tempContent = $('#content').val();
+	for(x=0;x<$('#query').val().length;x++){
+		tempText.push(tempContent[x]);
+	} 
+	if($('#query').val() == tempContent.val()){
+		tempContent.splice(0, $('#query').val().length);
+	}
+}
+
+var ticker = 0;
+
+var timerAB = [false, false];
+
+
+var array = ["console.log($targets);","var myInput = $SearchField.val();",'<input type="text" class="form-control'];
+
+$('#content').text(array[0]);
+
+var timeStart;
+var timeEnd;
+
+console.log(array[7]);
+
+function wordGun2(node){
+	if(timerAB[0] == false){
+		timerAB[0] = true;
+		timeStart = new Date();
+	}
+	var myInput = $SearchField.val();
+
+	if(myInput === $('#content').text()){
+		ticker++;
+		 $('#content').text(array[ticker]);
+		 $Searchfield.val('');
+	}
+	if(timerAB[1] == false && array[ticker] == null){
+		timerAB[1] == true;
+		$('#content').text("DONE!");
+		timeEnd = new Date();
+		totaltime = timeEnd - timeStart;
+		totalminutes = totaltime/1000/60;
+		console.log("totaltime", totaltime);
+		console.log("totalChars", numOfChars);
+		console.log("totaltimeinminutes", totalminutes);
+		console.log(numOfChars/totalminutes, " characters per minute")
+	}
+
+}
+
+var numOfChars = 0;
+for(x=0;x<array.length;x++){
+	for(y=0;y<array[x].length;y++){
+		numOfChars++
+	}
+}
+console.log(numOfChars);
+
+function wordGun(node){
+
+	$targets = $('#content');
+	console.log($targets);
+	// console.log('wordGun called');
+
+	//on keyup, look at the #query id box word
+	var myInput = $SearchField.val();
+
+	// console.log('myInput: ', myInput);
+
+	//regex???
+	var val = '^(?=.*\\b' + $.trim($(node).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val),
+        // search_results = [],		//debugging purposes only, this can be removed since counters are now keeping track of results.
+        
+        targetCounter = 0,
+        text;
+
+		$targets.each(function(){
+			//gets the text from the targets
+			var targetWord = $(this).text();
+
+			var text = $(this).text();//.replace(/\s+/g, ' ');
+						
+
+			// checks how many characters were selected?
+			var inputSoFar = $SearchField.val().length;
+			console.log(reg.test(text));
+			if(reg.test(text) === true){
+				targetCounter++;
+
+				//makes a var that is the part fo the word that matches your word
+				var inputHighlight = targetWord.slice(inputSoFar);
+				
+				inputHighlight.replace("<","\<");
+
+				inputHighlight.replace(">","\>");
+
+				myInput.replace("<","\<");
+
+				myInput.replace(">","\>");
+
+				// inputHighlight.replace('"','\"');
+
+				// inputHighlight.replace("'","\'");
+
+				// inputHighlight.replace("'","\'");
+
+				// inputHighlight.replace("'","\'");
+
+				console.log(inputHighlight);
+				console.log(myInput);
+
+				//rewrites the word as "what i've input" + what is left
+				$(this).html("<em>" +  myInput + "</em>" + inputHighlight);
+
+				// this marks the completion of a typed word and
+				if($SearchField.val() == targetWord){
+
+
+
+					//blanks the word input
+					$SearchField.val('');
+					//removes the animation div
+					$(this).closest('.wordTargetDetails').remove();
+
+				}
+
+			} 
+		});
+	// }
+};
+
+</script>
+
+</body>
+</html>
